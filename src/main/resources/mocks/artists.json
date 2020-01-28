@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "firstname": "The",
+    "lastname": "Beatles"
+  },
+  {
+    "id": 2,
+    "firstname": "AC/DC",
+    "lastname": ""
+  },
+  {
+    "id": 3,
+    "firstname": "Bob",
+    "lastname": "Dylan"
+  },
+  {
+    "id": 4,
+    "firstname": "The",
+    "lastname": "Queen"
+  },
+  {
+    "id": 5,
+    "firstname": "Charles",
+    "lastname": "Bradley"
+  }
+]

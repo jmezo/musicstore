@@ -1,0 +1,77 @@
+[
+  {
+    "id": 1,
+    "title": "Help!",
+    "length": 138,
+    "lyrics": null,
+    "year": "1965-07-01",
+    "writerName": "John Lennon & Paul McCartney",
+    "genre": "FOLK",
+    "artist": {
+      "id": 1
+    },
+    "album": {
+      "id": 1
+    }
+  },
+  {
+    "id": 2,
+    "title": "Highway to Hell",
+    "length": 207,
+    "lyrics": null,
+    "year": "1979-01-01",
+    "writerName": "Angus Young & Malcolm Young & Bon Scott",
+    "genre": "ROCK",
+    "artist": {
+      "id": 2
+    },
+    "album": {
+      "id": 2
+    }
+  },
+  {
+    "id": 3,
+    "title": "The Times They Are a-Changin'",
+    "length": 195,
+    "lyrics": null,
+    "year": "1964-01-01",
+    "writerName": "Bob Dylan",
+    "genre": "FOLK",
+    "artist": {
+      "id": 3
+    },
+    "album": {
+      "id": 3
+    }
+  },
+  {
+    "id": 4,
+    "title": "Bohemian Rhapsody",
+    "length": 355,
+    "lyrics": null,
+    "year": "1975-01-01",
+    "writerName": "Freddie Mercury",
+    "genre": "ROCK",
+    "artist": {
+      "id": 4
+    },
+    "album": {
+      "id": 4
+    }
+  },
+  {
+    "id": 5,
+    "title": "The World (Is Going Up In Flames)",
+    "length": 202,
+    "lyrics": null,
+    "year": "2011-01-01",
+    "writerName": "Charles Bradley & Thomas Brenneck & Mike Deller & Leon Michels",
+    "genre": "SOUL",
+    "artist": {
+      "id": 5
+    },
+    "album": {
+      "id": 5
+    }
+  }
+]

@@ -1,0 +1,1255 @@
+{
+	"info": {
+		"_postman_id": "a799c69e-0b1f-492e-a0cd-c4d507b16c5b",
+		"name": "musicstore",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "artists",
+			"item": [
+				{
+					"name": "GET all",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a3054ba6-c5ed-4f28-8b1c-07c2d6063107",
+								"exec": [
+									"pm.test(\"Artist start count\", function () {",
+									"    pm.globals.set(\"artist_start_count\", pm.response.json().length);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/artists",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"artists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2c131ab8-5deb-4b20-addb-1cf8ab2716a1",
+								"exec": [
+									"pm.test(\"check id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(jsonData.id).to.not.eql(null);",
+									"    ",
+									"    pm.globals.set(\"saved_artist\", JSON.stringify(jsonData));",
+									"});",
+									"pm.test(\"check firstname\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(jsonData.firstname).to.not.eql(null);",
+									"    pm.expect(jsonData.firstname).to.eql(req.firstname);",
+									"});",
+									"pm.test(\"check lastname\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(jsonData.lastname).to.not.eql(null);",
+									"    pm.expect(jsonData.lastname).to.eql(req.lastname);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstname\": \"Jackson\",\n\t\"lastname\": \"Brothers\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/artists",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"artists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET all again",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a3054ba6-c5ed-4f28-8b1c-07c2d6063107",
+								"exec": [
+									"pm.test(\"check new count\", function () {",
+									"    var artistCount = pm.globals.get(\"artist_start_count\");",
+									"    pm.expect(artistCount + 1).to.eql(pm.response.json().length);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/artists",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"artists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET one",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8df87ad5-d1e2-4062-b639-f148eb74ddbc",
+								"exec": [
+									"pm.globals.set(\"saved_artist_id\", JSON.parse(pm.globals.get(\"saved_artist\")).id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "95d8424e-25d3-4c07-b85f-1bd27bd4da59",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/artists/{{saved_artist_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"artists",
+								"{{saved_artist_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8acbe76a-d7cf-49c0-874e-c3fbc25f9bd4",
+								"exec": [
+									"pm.test(\"check id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(jsonData.id).to.not.eql(null);",
+									"    ",
+									"    pm.globals.set(\"edited_artist\", JSON.stringify(jsonData));",
+									"});",
+									"pm.test(\"check firstname\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    var saved = JSON.parse(pm.globals.get(\"saved_artist\"));",
+									"    pm.expect(jsonData.firstname).to.not.eql(null);",
+									"    pm.expect(jsonData.firstname).to.eql(req.firstname);",
+									"    pm.expect(jsonData.firstname).to.not.eql(saved.firstname);",
+									"});",
+									"pm.test(\"check lastname\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    var saved = JSON.parse(pm.globals.get(\"saved_artist\"));",
+									"    pm.expect(jsonData.lastname).to.not.eql(null);",
+									"    pm.expect(jsonData.lastname).to.eql(req.lastname);",
+									"    pm.expect(jsonData.lastname).to.not.eql(saved.lastname);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": {{saved_artist_id}},\n\t\"firstname\": \"Michael\",\n\t\"lastname\": \"Jackson\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/artists",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"artists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "40d07d4f-93a4-4e8c-9417-7b4a0288e922",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/artists/{{saved_artist_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"artists",
+								"{{saved_artist_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET one again",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8df87ad5-d1e2-4062-b639-f148eb74ddbc",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "95d8424e-25d3-4c07-b85f-1bd27bd4da59",
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/artists/{{saved_artist_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"artists",
+								"{{saved_artist_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "albums",
+			"item": [
+				{
+					"name": "GET all",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a3054ba6-c5ed-4f28-8b1c-07c2d6063107",
+								"exec": [
+									"pm.test(\"Albums start count\", function () {",
+									"    pm.globals.set(\"album_start_count\", pm.response.json().length);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/albums",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"albums"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2c131ab8-5deb-4b20-addb-1cf8ab2716a1",
+								"exec": [
+									"pm.test(\"check id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(jsonData.id).to.not.eql(null);",
+									"    ",
+									"    pm.globals.set(\"saved_album\", JSON.stringify(jsonData));",
+									"});",
+									"pm.test(\"check title\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(jsonData.title).to.not.eql(null);",
+									"    pm.expect(jsonData.title).to.eql(req.title);",
+									"});",
+									"pm.test(\"check count\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(jsonData.count).to.not.eql(null);",
+									"    pm.expect(jsonData.count).to.eql(req.count);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Imagine\",\n\t\"count\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/albums",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"albums"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET all again",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a3054ba6-c5ed-4f28-8b1c-07c2d6063107",
+								"exec": [
+									"pm.test(\"check new count\", function () {",
+									"    var albumCount = pm.globals.get(\"album_start_count\");",
+									"    pm.expect(albumCount + 1).to.eql(pm.response.json().length);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/albums",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"albums"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET one",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8df87ad5-d1e2-4062-b639-f148eb74ddbc",
+								"exec": [
+									"pm.globals.set(\"saved_album_id\", JSON.parse(pm.globals.get(\"saved_album\")).id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "95d8424e-25d3-4c07-b85f-1bd27bd4da59",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/albums/{{saved_album_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"albums",
+								"{{saved_album_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8acbe76a-d7cf-49c0-874e-c3fbc25f9bd4",
+								"exec": [
+									"pm.test(\"check id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(jsonData.id).to.not.eql(null);",
+									"    ",
+									"    pm.globals.set(\"edited_album\", JSON.stringify(jsonData));",
+									"});",
+									"pm.test(\"check title\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    var saved = JSON.parse(pm.globals.get(\"saved_album\"));",
+									"    pm.expect(jsonData.title).to.not.eql(null);",
+									"    pm.expect(jsonData.title).to.eql(req.title);",
+									"    pm.expect(jsonData.title).to.not.eql(saved.title);",
+									"});",
+									"pm.test(\"check count\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    var saved = JSON.parse(pm.globals.get(\"saved_album\"));",
+									"    pm.expect(jsonData.count).to.not.eql(null);",
+									"    pm.expect(jsonData.count).to.eql(req.count);",
+									"    pm.expect(jsonData.count).to.not.eql(saved.count);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": {{saved_album_id}},\n\t\"title\": \"Imagine (Internacional)\",\n\t\"count\": 12\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/albums",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"albums"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "40d07d4f-93a4-4e8c-9417-7b4a0288e922",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/albums/{{saved_album_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"albums",
+								"{{saved_album_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET one again",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8df87ad5-d1e2-4062-b639-f148eb74ddbc",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "95d8424e-25d3-4c07-b85f-1bd27bd4da59",
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/albums/{{saved_album_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"albums",
+								"{{saved_album_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "songs",
+			"item": [
+				{
+					"name": "GET all",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a3054ba6-c5ed-4f28-8b1c-07c2d6063107",
+								"exec": [
+									"pm.test(\"Albums start count\", function () {",
+									"    pm.globals.set(\"song_start_count\", pm.response.json().length);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/songs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"songs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST artists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2c131ab8-5deb-4b20-addb-1cf8ab2716a1",
+								"exec": [
+									"pm.test(\"check id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(jsonData.id).to.not.eql(null);",
+									"    ",
+									"    pm.globals.set(\"saved_artist\", JSON.stringify(jsonData));",
+									"});",
+									"pm.test(\"check firstname\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(jsonData.firstname).to.not.eql(null);",
+									"    pm.expect(jsonData.firstname).to.eql(req.firstname);",
+									"});",
+									"pm.test(\"check lastname\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(jsonData.lastname).to.not.eql(null);",
+									"    pm.expect(jsonData.lastname).to.eql(req.lastname);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstname\": \"Jackson\",\n\t\"lastname\": \"Brothers\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/artists",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"artists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST albums",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2c131ab8-5deb-4b20-addb-1cf8ab2716a1",
+								"exec": [
+									"pm.test(\"check id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(jsonData.id).to.not.eql(null);",
+									"    ",
+									"    pm.globals.set(\"saved_album\", JSON.stringify(jsonData));",
+									"});",
+									"pm.test(\"check title\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(jsonData.title).to.not.eql(null);",
+									"    pm.expect(jsonData.title).to.eql(req.title);",
+									"});",
+									"pm.test(\"check count\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(jsonData.count).to.not.eql(null);",
+									"    pm.expect(jsonData.count).to.eql(req.count);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Imagine\",\n\t\"count\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/albums",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"albums"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2c131ab8-5deb-4b20-addb-1cf8ab2716a1",
+								"exec": [
+									"pm.test(\"check id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(jsonData.id).to.not.eql(null);",
+									"    ",
+									"    pm.globals.set(\"saved_song\", JSON.stringify(jsonData));",
+									"});",
+									"pm.test(\"check title\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(jsonData.title).to.not.eql(null);",
+									"    pm.expect(jsonData.title).to.eql(req.title);",
+									"});",
+									"pm.test(\"check length\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(jsonData.length).to.not.eql(null);",
+									"    pm.expect(jsonData.length).to.eql(req.length);",
+									"});",
+									"pm.test(\"check length\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(jsonData.length).to.not.eql(null);",
+									"    pm.expect(jsonData.length).to.eql(req.length);",
+									"});",
+									"pm.test(\"check year\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(jsonData.year).to.not.eql(null);",
+									"    pm.expect(jsonData.year).to.eql(req.year);",
+									"});",
+									"pm.test(\"check writerName\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(jsonData.writerName).to.not.eql(null);",
+									"    pm.expect(jsonData.writerName).to.eql(req.writerName);",
+									"});",
+									"pm.test(\"check genre\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(jsonData.genre).to.not.eql(null);",
+									"    pm.expect(jsonData.genre).to.eql(req.genre);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c4066973-854a-41e6-a4a7-fa4e92de3358",
+								"exec": [
+									"pm.globals.set(\"saved_artist_id\", JSON.parse(pm.globals.get(\"saved_artist\")).id);",
+									"pm.globals.set(\"saved_album_id\", JSON.parse(pm.globals.get(\"saved_album\")).id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Born in the USA\",\n    \"length\": 177,\n    \"lyrics\": null,\n    \"year\": \"1988-01-01\",\n    \"writerName\": \"Some guys\",\n    \"genre\": \"ROCK\",\n    \"artist\": {\n      \"id\": {{saved_artist_id}}\n    },\n    \"album\": {\n      \"id\": {{saved_album_id}}\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/songs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"songs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET all again",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a3054ba6-c5ed-4f28-8b1c-07c2d6063107",
+								"exec": [
+									"pm.test(\"check new count\", function () {",
+									"    var songCount = pm.globals.get(\"song_start_count\");",
+									"    pm.expect(songCount + 1).to.eql(pm.response.json().length);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/songs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"songs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET one",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8df87ad5-d1e2-4062-b639-f148eb74ddbc",
+								"exec": [
+									"pm.globals.set(\"saved_song_id\", JSON.parse(pm.globals.get(\"saved_song\")).id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "95d8424e-25d3-4c07-b85f-1bd27bd4da59",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/songs/{{saved_song_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"songs",
+								"{{saved_song_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8acbe76a-d7cf-49c0-874e-c3fbc25f9bd4",
+								"exec": [
+									"pm.test(\"check id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(jsonData.id).to.not.eql(null);",
+									"    ",
+									"    pm.globals.set(\"edited_song\", JSON.stringify(jsonData));",
+									"});",
+									"pm.test(\"check title\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    var saved = JSON.parse(pm.globals.get(\"saved_song\"));",
+									"    pm.expect(jsonData.title).to.not.eql(null);",
+									"    pm.expect(jsonData.title).to.eql(req.title);",
+									"    pm.expect(jsonData.title).to.not.eql(saved.title);",
+									"});",
+									"pm.test(\"check length\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    var saved = JSON.parse(pm.globals.get(\"saved_song\"));",
+									"    pm.expect(jsonData.length).to.not.eql(null);",
+									"    pm.expect(jsonData.length).to.eql(req.length);",
+									"    pm.expect(jsonData.length).to.not.eql(saved.length);",
+									"});",
+									"pm.test(\"check year\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    var saved = JSON.parse(pm.globals.get(\"saved_song\"));",
+									"    pm.expect(jsonData.year).to.not.eql(null);",
+									"    pm.expect(jsonData.year).to.eql(req.year);",
+									"    pm.expect(jsonData.year).to.not.eql(saved.year);",
+									"});",
+									"pm.test(\"check writerName\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    var saved = JSON.parse(pm.globals.get(\"saved_song\"));",
+									"    pm.expect(jsonData.writerName).to.not.eql(null);",
+									"    pm.expect(jsonData.writerName).to.eql(req.writerName);",
+									"    pm.expect(jsonData.writerName).to.not.eql(saved.writerName);",
+									"});",
+									"pm.test(\"check genre\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var req = JSON.parse(pm.request.body.raw);",
+									"    var saved = JSON.parse(pm.globals.get(\"saved_song\"));",
+									"    pm.expect(jsonData.genre).to.not.eql(null);",
+									"    pm.expect(jsonData.genre).to.eql(req.genre);",
+									"    pm.expect(jsonData.genre).to.not.eql(saved.genre);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": {{saved_song_id}},\n\t\"title\": \"Buffalo solider\",\n    \"length\": 179,\n    \"lyrics\": null,\n    \"year\": \"1990-01-01\",\n    \"writerName\": \"another guy\",\n    \"genre\": \"POP\",\n    \"artist\": {\n      \"id\": {{saved_artist_id}}\n    },\n    \"album\": {\n      \"id\": {{saved_album_id}}\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/songs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"songs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "40d07d4f-93a4-4e8c-9417-7b4a0288e922",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/songs/{{saved_song_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"songs",
+								"{{saved_song_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET one again",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8df87ad5-d1e2-4062-b639-f148eb74ddbc",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "95d8424e-25d3-4c07-b85f-1bd27bd4da59",
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/songs/{{saved_song_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"songs",
+								"{{saved_song_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

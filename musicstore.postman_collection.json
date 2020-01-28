@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a799c69e-0b1f-492e-a0cd-c4d507b16c5b",
+		"_postman_id": "9583c09a-7b45-49c6-ab7b-8ba9c407a21e",
 		"name": "musicstore",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -964,7 +964,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"Born in the USA\",\n    \"length\": 177,\n    \"lyrics\": null,\n    \"year\": \"1988-01-01\",\n    \"writerName\": \"Some guys\",\n    \"genre\": \"ROCK\",\n    \"artist\": {\n      \"id\": {{saved_artist_id}}\n    },\n    \"album\": {\n      \"id\": {{saved_album_id}}\n    }\n}",
+							"raw": "{\n    \"title\": \"Born in the USA\",\n    \"length\": 177,\n    \"lyrics\": null,\n    \"year\": \"1988-01-01\",\n    \"writerName\": \"Some guys\",\n    \"genre\": \"ROCK\",\n    \"artistId\": {{saved_artist_id}},\n    \"albumId\": {{saved_album_id}}\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1145,7 +1145,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\": {{saved_song_id}},\n\t\"title\": \"Buffalo solider\",\n    \"length\": 179,\n    \"lyrics\": null,\n    \"year\": \"1990-01-01\",\n    \"writerName\": \"another guy\",\n    \"genre\": \"POP\",\n    \"artist\": {\n      \"id\": {{saved_artist_id}}\n    },\n    \"album\": {\n      \"id\": {{saved_album_id}}\n    }\n}",
+							"raw": "{\n\t\"id\": {{saved_song_id}},\n\t\"title\": \"Buffalo solider\",\n    \"length\": 179,\n    \"lyrics\": null,\n    \"year\": \"1990-01-01\",\n    \"writerName\": \"another guy\",\n    \"genre\": \"POP\",\n    \"artistId\": {{saved_artist_id}},\n    \"albumId\": {{saved_album_id}}\n}",
 							"options": {
 								"raw": {
 									"language": "json"
